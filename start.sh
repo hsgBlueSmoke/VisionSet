@@ -1,4 +1,4 @@
-export DOCKER_COMPOSE_VERSION=3.8
+export DOCKER_COMPOSE_VERSION=v2.15.1
 export NETWORK_NAME=ens3
 export USERNAME=ubuntu
 export PASSWORD=ubuntu
@@ -7,6 +7,9 @@ export PASSWORD=ubuntu
 #export PUBLIC_IP=$(curl ipinfo.io/ip)
 export DOCKER_HOST_IP=$(ip addr show ${NETWORK_NAME} | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 export CVAT_HOST=$DOCKER_HOST_IP
+
+
+sudo apt update && sudo apt upgrade -y
 
 # allow login by password
 sudo sed -i "s/.*PasswordAuthentication.*/PasswordAuthentication yes/g" /etc/ssh/sshd_config
