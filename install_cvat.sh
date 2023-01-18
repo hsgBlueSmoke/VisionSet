@@ -17,7 +17,9 @@ export CVAT_HOST=$DOCKER_HOST_IP
 docker-compose -f docker-compose.yml -f components/serverless/docker-compose.serverless.yml up -d
 docker exec -it cvat_server bash -ic 'python3 ~/manage.py createsuperuser'
 
+nuctl create project cvat
+
 nuctl deploy --project-name cvat \
-  --path serverless/openvino/omz/public/yolo-v3-tf/nuclio \
+  --path serverless/onnx/WongKinYiu/yolov7/nuclio \
   --volume `pwd`/serverless/common:/opt/nuclio/common \
   --platform local
