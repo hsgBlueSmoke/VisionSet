@@ -14,7 +14,7 @@ sudo ln -sf $(pwd)/nuctl-${NUCLIO_VERION}-linux-amd64 /usr/local/bin/nuctl
 
 export CVAT_HOST=$DOCKER_HOST_IP
 
-docker compose -f docker-compose.yml -f components/serverless/docker-compose.serverless.yml up -d
+docker-compose -f docker-compose.yml -f components/serverless/docker-compose.serverless.yml up -d
 docker exec -it cvat_server bash -ic 'python3 ~/manage.py createsuperuser'
 
 nuctl deploy --project-name cvat \
