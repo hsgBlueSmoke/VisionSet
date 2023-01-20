@@ -1,0 +1,40 @@
+version: '3.1'
+services:
+  mongo:
+    image: mongo:3.6.1
+    ports:
+      - 27017:27017    
+    restart: always
+    command: --smallfiles    
+    container_name: app_mongodb_c
+    volumes:
+      - ~/dockerdata/mongodb:/data/db      
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      
+  jupyter:
+    image: jupyter/tensorflow-notebook
+    volumes:
+      - /home/ubuntu/vision/data:/home/jovyan/work
+#      - ./configure_environment.sh:/usr/local/bin/before-notebook.d/configure_environment.sh
+    ports:
+      - 8888:8888
+#    enviroment:
+#      - PASSWORD=vision
+    
+    working_dir: /home/jovyan/work
+    
+  cvat:
+    extends:
+      file: cvat/docker-compose.yml
+  
