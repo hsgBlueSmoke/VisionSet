@@ -2,7 +2,7 @@ export USERNAME=ubuntu
 export CVAT_VERSION=release-2.3.0
 export NUCLIO_VERION=1.8.14
 
-# Install 
+# Install CVAT
 #mkdir /home/${USERNAME}/vision/cvat
 ## cvat
 #git clone --branch ${CVAT_VERSION} https://github.com/opencv/cvat /home/${USERNAME}/vision/cvat
@@ -17,9 +17,16 @@ export CVAT_HOST=$DOCKER_HOST_IP
 docker-compose -f docker-compose.yml -f components/serverless/docker-compose.serverless.yml up -d
 docker exec -it cvat_server bash -ic 'python3 ~/manage.py createsuperuser'
 
+# Nuclio for cvat
+
 nuctl create project cvat
 
 nuctl deploy --project-name cvat \
   --path serverless/onnx/WongKinYiu/yolov7/nuclio \
   --volume `pwd`/serverless/common:/opt/nuclio/common \
   --platform local
+
+# Yolov7
+
+mkdir /home/${USERNAME}/vision/data
+git clone https://github.com/WongKinYiu/yolov7 /home/${USERNAME}/vision/data/yolov7
